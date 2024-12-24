@@ -1,6 +1,6 @@
 # map your map
 
-#' map_coverage
+#' Map Coverage
 #' @description 
 #' Creates a visual representation of the portion 
 #' of trails covered overlaying the trail network
@@ -14,8 +14,7 @@
 #' In the examples, this is sf from ONF.geojson and ONP.geojson
 #' @param trail_coverage sf output of get_coverage()
 #' @param trail_coverage_portion df has TRAIL_NAME 
-#' and portion covered; 
-#' second output of get_covered_portion()
+#' and portion covered; output of get_covered_portion()
 #' @param title string title you want for your map. 
 #' defaults to "Your Completed Trail Network"
 #' @param caption string caption you want for your map. 
