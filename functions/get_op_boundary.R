@@ -1,21 +1,28 @@
 # this is very focused rn, could generalize
 
-get_bbox <- function(onp, onf){
-  onp_bbox <- sf::st_bbox(onp)
-  onf_bbox<- sf::st_bbox(onf)
-  bbox <- sf::st_bbox(c(xmin = min(onp_bbox$xmin, onf_bbox$xmin),
-                               xmax = max(onp_bbox$xmax, onf_bbox$xmax), 
-                               ymax = max(onp_bbox$ymax, onf_bbox$ymax), 
-                               ymin = min(onp_bbox$ymin, onf_bbox$ymin)
-  ),
-  crs = sf::st_crs(onp))
+#' @param geolist is a single geometry or a list of geometries
+#'
+get_bbox <- function(geolist){
+  if(class(geolist)[[1]] != "list"){ geolist <- list(geolist)}
+  bx <- lapply(geolist, st_bbox)
+  bbox <- sf::st_bbox(c(xmin = min(unlist(lapply(bx, function(x) x[1])) ),
+                        xmax = max(unlist(lapply(bx, function(x) x[3])) ), 
+                        ymax = max(unlist(lapply(bx, function(x) x[4])) ), 
+                        ymin = min(unlist(lapply(bx, function(x) x[2])) )
+                ),
+      crs = sf::st_crs(geolist[[1]])
+  )
   return(bbox)
 }
 
 
-get_op_boundary <- function(bbox){
+get_cropped_to_boundary <- function(geo, bbox){
+  sf::st_crop(sf::st_transform(geo, crs = st_crs(bbox)), bbox)
+}
+
+get_wa_cropped <- function(bbox){
   wa_state <- tigris::states(cb = TRUE, resolution = "500k", year = 2020) %>%
     filter(STUSPS == "WA")
   
-  sf::st_crop(sf::st_transform(wa_state, crs = st_crs(bbox)), bbox)
+  get_cropped_to_boundary(wa_state, bbox)
 }
