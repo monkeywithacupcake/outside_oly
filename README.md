@@ -95,6 +95,7 @@ map_coverage(wa_cropped, trail_network = onp,
 )
 ```
 
+![Lake Angeles v ONP trails](https://github.com/monkeywithacupcake/outside_oly/blob/main/img/lake_angeles_comp_trail.jpeg)
 
 ## Other Uses
 
