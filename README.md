@@ -120,7 +120,7 @@ This results in:
 
 For a slightly more interesting plot, here's a few of the hikes I recorded on a multi-day trip through the seven lakes basin and high divide, overlaid on the loop. 
 
-![Another Example showing a hike over ONP trails](https://github.com/monkeywithacupcake/outside_oly/blob/img/map_track_v_trail.jpeg)
+![Another Example showing a hike over ONP trails](https://github.com/monkeywithacupcake/outside_oly/blob/main/img/map_track_v_trail.jpeg)
 
 # Future State
 
