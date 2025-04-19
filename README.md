@@ -95,6 +95,33 @@ map_coverage(wa_cropped, trail_network = onp,
 )
 ```
 
+
+## Other Uses
+
+You may not care to get coverage but are just wanting a cleaner way to see your tracks versus some trail or other tracks. A simple little function here `map_track_v_trail()` has you. 
+
+```r
+# as an example read in the one example .gpx
+this_track <- read_single_gpx(file.path("data","done","Lake_Angeles.gpx"),
+                              crs = 4326) %>% group_by(name) %>%
+  dplyr::summarize(do_union=FALSE) %>% 
+  st_cast("MULTILINESTRING") %>%
+  ungroup()
+
+# maybe you want to compare it two the two trails that start in the same place
+this_trail <- filter(onp, TRAIL_NAME %in% c('LAKE ANGELES TRAIL',
+                                            'HEATHER PARK TRAIL'))
+map_track_v_trail(trail_sf = this_trail, 
+                  track_sf = this_track)
+```
+This results in: 
+
+![Lake Angeles hike over Lake Angeles and Heather Park ONP trails](https://github.com/monkeywithacupcake/outside_oly/blob/main/img/lake_angeles_example_tvt.jpeg)
+
+For a slightly more interesting plot, here's a few of the hikes I recorded on a multi-day trip through the seven lakes basin and high divide, overlaid on the loop. 
+
+![Another Example showing a hike over ONP trails](https://github.com/monkeywithacupcake/outside_oly/blob/img/map_track_v_trail.jpeg)
+
 # Future State
 
 I'm working to build this out to a package but also to make it expandable and generic, so if you had local trails or another place that mattered to you, you could do a similar analysis.

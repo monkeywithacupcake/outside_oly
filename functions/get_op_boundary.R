@@ -15,6 +15,16 @@ get_bbox <- function(geolist){
   return(bbox)
 }
 
+bb_shrink <- function(bb, e) { # copied from stars::bb_shrink (not exported)
+  stopifnot(inherits(bb, "bbox"))
+  dx = diff(bb[c("xmin", "xmax")])
+  dy = diff(bb[c("ymin", "ymax")])
+  st_bbox(setNames(c(bb["xmin"] + e * dx, 
+                     bb["ymin"] + e * dy, 
+                     bb["xmax"] - e * dx, 
+                     bb["ymax"] - e * dy), c("xmin", "ymin", "xmax", "ymax")),
+          crs = st_crs(bb))
+}
 
 get_cropped_to_boundary <- function(geo, bbox){
   sf::st_crop(sf::st_transform(geo, crs = st_crs(bbox)), bbox)
